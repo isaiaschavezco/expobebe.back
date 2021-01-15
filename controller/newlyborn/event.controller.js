@@ -1,12 +1,10 @@
 const eventCtrl = {}
   const express = require("express");
-  const passport = require("passport");
   const status  = require("../../codes/rest")
   const config = require("../../config/keys")
   const serviceEvents = require("../../services/Events")
   const serviceGenerics = require("../../services/Generic")
   const serviceUtilities = require("../../services/Utilities")
-  const serviceUsers = require("../../services/Users")
  const {EventNewlyBorn} = require("../../models/Events")
 
   var moment = require('moment');
@@ -15,10 +13,7 @@ const eventCtrl = {}
 eventCtrl.createEvent= async (req, res)=>{
     try {
       const params = req.body
-      console.log("params:", params)
-      const  evento = await serviceGenerics.create(
-        "EventNewlyBorn", params)
-
+      const  evento = await serviceGenerics.create("EventNewlyBorn", params)
       return res.json({
            status : status.SUCCESS,
            result : {
