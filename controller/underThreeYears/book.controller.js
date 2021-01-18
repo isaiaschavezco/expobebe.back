@@ -5,12 +5,12 @@ const serviceBooks = require('../../services/Books')
 const serviceGenerics = require('../../services/Generic')
 const serviceUtilities = require('../../services/Utilities')
 
-const { BookNewlyBorn } = require('./../../models/Books')
+const {BookUnderThreeYears } = require('./../../models/Books')
 
 bookCrl.createBook = async (req, res) => {
   try {
     let params = req.body
-    let libro = await serviceGenerics.create('BookNewlyBorn', params)
+    let libro = await serviceGenerics.create('BookUnderThreeYears', params)
 
     return res.json({
       status: status.SUCCESS,
@@ -30,7 +30,7 @@ bookCrl.createBook = async (req, res) => {
 // requireLogin,
 bookCrl.getBook = async (req, res) => {
   try {
-    let libro = await serviceBooks.getOne(req.params.bookId, BookNewlyBorn)
+    let libro = await serviceBooks.getOne(req.params.bookId, BookUnderThreeYears)
 
     return res.json({
       status: status.SUCCESS,
@@ -63,7 +63,7 @@ bookCrl.updateBook = async (req, res) => {
 
     console.log('PATCH->attributes:', attributes)
     let book = await serviceGenerics.patch(
-      BookNewlyBorn,
+      BookUnderThreeYears,
       attributes,
       req.params.bookId
     )
@@ -91,7 +91,7 @@ bookCrl.deleteBook = async (req, res) => {
       })
     } else {
       let result = await serviceGenerics.delete(
-        BookNewlyBorn,
+        BookUnderThreeYears,
         req.params.bookId
       )
       console.log('result:', result)
@@ -110,7 +110,7 @@ bookCrl.deleteBook = async (req, res) => {
       }
     }
   } catch (e) {
-    console.log('BookNewlyBorn.catch', e)
+    console.log('BookUnderThreeYears.catch', e)
     let errorServer = status.ERROR_SERVER
     errorServer.detail = e.message
     res.status(500).send({
@@ -122,7 +122,7 @@ bookCrl.getBooksByPagination = async (req, res) => {
   console.log('/pagination')
   console.log('req.query:', req.query)
   try {
-    const books = await serviceUtilities.getAllBooks(BookNewlyBorn)
+    const books = await serviceUtilities.getAllBooks(BookUnderThreeYears)
     return res.json({
       status: status.SUCCESS,
       result: {

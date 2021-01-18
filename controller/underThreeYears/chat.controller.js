@@ -2,12 +2,12 @@ const chatCtrl = {}
 const mongoose = require('mongoose')
 const status = require('../../codes/rest')
 
-const {ChatPregnant} = require('../../models/joins/Chats')
-const {EventPregnant} = require('../../models/Events')
+const {ChatUnderThreeYears} = require('../../models/joins/Chats')
+const {EventUnderThreeYears} = require('../../models/Events')
 const Users = require('../../models/Users')
 const serviceGenerics = require('../../services/Generic')
 const serviceChats = require('../../services/Chats')
-const {ChatRowPregnant} = require('../../models/joins/ChatRows')
+const {ChatRowUnderThreeYears} = require('../../models/joins/ChatRows')
 
 
 chatCtrl.createChat  = async (req, res)=> {
@@ -18,7 +18,7 @@ chatCtrl.createChat  = async (req, res)=> {
       })
     }
 
-    const event = await serviceGenerics.read(EventPregnant, req.body.eventId)
+    const event = await serviceGenerics.read(EventUnderThreeYears, req.body.eventId)
     if (!event) {
       return res.json({
         status: status.ID_INVALID_CREATE_CHAT
@@ -28,7 +28,7 @@ chatCtrl.createChat  = async (req, res)=> {
       eventId: mongoose.Types.ObjectId(req.body.eventId)
     }
 
-    const chat = await serviceGenerics.upsert(ChatPregnant, filter, req.body)
+    const chat = await serviceGenerics.upsert(ChatUnderThreeYears, filter, req.body)
     console.log('chat:', chat)
     return res.json({
       status: status.SUCCESS,
@@ -55,17 +55,17 @@ chatCtrl.createComment =  async (req, res)=> {
         status: status.ID_INVALID_CREATE_COMMENT
       })
     } else {
-      var chat = await serviceGenerics.read(ChatPregnant, req.params.chatId)
+      var chat = await serviceGenerics.read(ChatUnderThreeYears, req.params.chatId)
       var user = await serviceGenerics.read(Users, req.body.user)
       if (chat == null || user == null) {
         return res.json({
           status: status.ID_INVALID_CREATE_COMMENT
         })
       } else {
-        const message = await serviceGenerics.create('ChatRowPregnant', req.body)
+        const message = await serviceGenerics.create('ChatRowUnderThreeYears', req.body)
         console.log('message:', message)
         // if(message){
-        const chat = await serviceChats.pushRow(req.params.chatId, message._id,ChatRowPregnant)
+        const chat = await serviceChats.pushRow(req.params.chatId, message._id,ChatRowUnderThreeYears)
         console.log('chat:', chat)
         // }
         return res.json({
@@ -88,7 +88,7 @@ chatCtrl.createComment =  async (req, res)=> {
 
 chatCtrl.getEvent = async (req, res)=> {
   try {
-    const chat = await serviceChats.getDetail(req.params.eventId,ChatRowPregnant)
+    const chat = await serviceChats.getDetail(req.params.eventId,ChatRowUnderThreeYears)
     return res.json({
       status: status.SUCCESS,
       result: {

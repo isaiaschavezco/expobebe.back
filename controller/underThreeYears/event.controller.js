@@ -1,36 +1,19 @@
-/**
- * @Date:   2020-09-01T21:51:47-05:00
- * @Last modified time: 2020-10-02T19:45:28-05:00
- */
-
+const eventCtrl = {}
   const express = require("express");
-  const passport = require("passport");
-  const router = express.Router();
   const status  = require("../../codes/rest")
   const config = require("../../config/keys")
   const serviceEvents = require("../../services/Events")
   const serviceGenerics = require("../../services/Generic")
   const serviceUtilities = require("../../services/Utilities")
-  const serviceUsers = require("../../services/Users")
+ const {EventUnderThreeYears} = require("../../models/Events")
 
   var moment = require('moment');
 
-  const mongoose = require("mongoose");
 
-  const Event = require("./../../models/Events")
-  const requireLogin = passport.authenticate('jwt', {
-    session: false,
-    failureRedirect: '/api/error'
-  })
-
-  router.post("/",
-   async(req, res) => {
+eventCtrl.createEvent= async (req, res)=>{
     try {
-      var params = req.body
-      console.log("params:", params)
-      var  evento = await serviceGenerics.create(
-        "Events", params)
-
+      const params = req.body
+      const  evento = await serviceGenerics.create("EventUnderThreeYears", params)
       return res.json({
            status : status.SUCCESS,
            result : {
@@ -38,22 +21,21 @@
            }})
     } catch (e) {
       console.log("events.catch", e)
-      var errorServer = status.ERROR_SERVER
+      const errorServer = status.ERROR_SERVER
       errorServer.detail = e.message
       res.status(500).send({
           status:errorServer
       });
     }
-  })
+  }
 
 
-    router.get("/:eventId",
-       // requireLogin,
-       async (req, res) => {
+    
+eventCtrl.getEvent= async (req, res)=>{
          try {
 
-           var evento = await serviceEvents.getOne(
-             req.params.eventId)
+           const evento = await serviceEvents.getOne(
+             req.params.eventId,EventUnderThreeYears)
 
             return res.json({
               status:status.SUCCESS,
@@ -63,20 +45,19 @@
               });
 
          } catch (err) {
-           var errorServer = status.ERROR_SERVER
+           const errorServer = status.ERROR_SERVER
            errorServer.detail = err.message
            res.status(500).send({
                status:errorServer
            });
          }
-   })
+   }
 
 
-   router.patch("/:eventId",
-      async (req, res) => {
+eventCtrl.updateEvent= async (req, res)=>{
         try {
           console.log("/:eventId->", req.body)
-          var attributes = {}
+          let attributes = {}
           if(req.body.name){
              attributes.name = req.body.name
           }
@@ -106,7 +87,7 @@
             attributes.status = req.body.status
           }
           console.log("PATCH->attributes:", attributes)
-          var event = await serviceGenerics.patch(Event,
+          const event = await serviceGenerics.patch(EventUnderThreeYears,
             attributes,
             req.params.eventId)
 
@@ -124,10 +105,10 @@
               status:errorServer
           });
         }
-   })
+   }
 
-   router.delete("/:eventId",
-      async (req, res) => {
+
+      eventCtrl.deleteEvent = async (req, res) =>{
         try {
             if(req.params.eventId == null){
               return res.json({
@@ -135,7 +116,7 @@
                 });
             }else{
               var result = await serviceGenerics.delete(
-                Event,  req.params.eventId
+                EventUnderThreeYears,  req.params.eventId
               )
               console.log("result:", result)
 
@@ -160,10 +141,9 @@
               status:errorServer
           });
         }
-   })
+   }
 
-   router.get("/pagination/:skip",
-      async (req, res) => {
+      eventCtrl.getEventWithPagination= async (req, res)=>{
         console.log("/pagination")
         console.log("req.query:", req.query)
         if(    req.query.date != null
@@ -228,7 +208,7 @@
              date:-1
            }
            var events = await serviceUtilities.getAllEventsWithPagination(
-                              Event, filter, skip, limit, sort)
+                              EventUnderThreeYears,"ProductsUnderThreeYears", filter, skip, limit, sort)
 
            return res.json({
               status:status.SUCCESS,
@@ -243,6 +223,7 @@
               status:errorServer
           });
         }
- })
+ }
 
-  module.exports = router;
+
+ module.exports =  eventCtrl

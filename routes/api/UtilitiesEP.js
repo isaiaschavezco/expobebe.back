@@ -4,9 +4,7 @@
  const passport = require("passport");
 
  let multer  = require('multer');
- // let upload  = multer({ storage: multer.memoryStorage() });
  var inspect = require('util').inspect;
- // const UUID = require('uuid/v4');
  const Busboy = require('busboy');
  const AWS = require('aws-sdk');
  const videoshow = require('videoshow');
@@ -15,20 +13,14 @@
 
  const status  = require("../../codes/rest")
  const config = require("../../config/keys")
- const configWalmart = require("../../config/walmart")
-
  const serviceUtilitites = require("../../services/Utilities")
- const serviceWalmart = require("../../services/Walmart")
  const serviceAws = require("../../services/Aws")
  const serviceGenerics = require("../../services/Generic")
 
 
 
- const URL_VIEW_SECTION = configWalmart.SERVER_WALMART + configWalmart.URL_VIEW_SECTION
- const URL_PLAY_GAME = configWalmart.SERVER_WALMART + configWalmart.URL_PLAY_GAME
 
 
- configWalmart.SERVER_WALMART + configWalmart
 
  const requireLogin = passport.authenticate('jwt', {
    session: false,
@@ -167,114 +159,8 @@
         });
       }
     }
-),
+)
 
- router.post("/createVideo",
-  async (req, res) => {
-    try {
-      var initDate = moment(new Date())
-      console.log("cargando imagenes")
-      var secondsToShowEachImage = 0.5
-
-      var images = [
-      
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02956.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02957.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02958.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02959.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02960.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02961.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02962.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02963.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02964.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02965.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02967.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02968.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02969.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02970.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02971.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02972.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02973.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02974.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02975.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02976.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02977.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02978.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02979.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02980.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02981.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02982.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02983.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02984.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02985.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02986.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02987.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02988.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02989.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02990.JPG', loop: secondsToShowEachImage},
-        {path: '/Users/memo/Documents/workspaces/inmersys/juguetilandia/routes/api/HasbroStopMotion/DSC02991.JPG', loop: secondsToShowEachImage},
-
-
-      ]
-
-      console.log("imagenes cargadas")
-      console.log("images:", images)
-
-      var videoOptions = {
-        // fps: 1,
-        // loop: 5, // seconds
-        transition: false,
-        // transitionDuration: 0, // seconds
-        // videoBitrate: 1024,
-        videoCodec: 'libx264',
-        size: '640x?',
-        audioBitrate: '128k',
-        audioChannels: 2,
-        format: 'mp4',
-        pixelFormat: 'yuv420p'
-      }
-
-
-
-   
-
-      videoshow(images, videoOptions)
-                // .audio('song.mp3')
-                .save('video.mp4')
-                .on('start', function (command) {
-                  console.log('ffmpeg process started:', command)
-                  console.log("init:", new Date())
-                })
-                .on('error', function (err, stdout, stderr) {
-                  console.error('Error:', err)
-                  console.error('ffmpeg stderr:', stderr)
-                  var errorServer = status.ERROR_SERVER
-                  errorServer.detail = err.message
-                  res.status(500).send({
-                      status:errorServer
-                  });
-                })
-                .on('end', function (output) {
-                  console.log('Video created in:', output)
-                  var finalDate = moment(new Date())
-                  res.json({
-                      status:status.SUCCESS,
-                      result:{
-                        dimensions:"512 × 288",
-                        initDate,
-                        finalDate,
-                      }})
-                })
-
-
-    } catch (err) {
-      var errorServer = status.ERROR_SERVER
-      errorServer.detail = err.message
-      res.status(500).send({
-          status:errorServer
-      });
-    }
- })
 
 
 const app = express();
@@ -304,6 +190,8 @@ router.post('/uploadFile',
   return fileUpload.save(req.file, res, req.body.folder);
 });
 
+//Quizá haya que remover estos endpoints
+
 router.post('/viewSection',
   async function (req, res) {
     if(req.body.section == null){
@@ -311,14 +199,8 @@ router.post('/viewSection',
         status:status.ID_INVALID_VIEW_SECTION
         });
     }
-    var response = await serviceWalmart.post(URL_VIEW_SECTION, req.body)
-    console.log("response:", response)
     return res.json({
       status:status.SUCCESS,
-      result:{
-        status: response.status,
-        statusText: response.statusText
-        }
       });
 
 });
@@ -326,41 +208,9 @@ router.post('/viewSection',
 
 router.post('/viewCatalog',
   async function (req, res) {
-    console.log("/viewCatalog")
-    console.log("req.body:", req.body)
-    if( req.body.catalog == null ||
-        req.body.value == null ||
-        req.body.email == null){
-          return res.json({
-            status:status.ID_INVALID_VIEW_CATALOG
-            });
-    }
-
-    var enumVal = await serviceWalmart.getEnum(req.body.catalog)
-    var body = {}
-    body.email = req.body.email
-    console.log("enumVal:", enumVal)
-    if(req.body.catalog == "GAME"){
-      body.game = {
-        name : req.body.value
-      }
-    }else if(req.body.catalog == "EVENT"){
-      body.event = {
-        name : req.body.value
-      }
-    }else{
-      body[enumVal.value] = req.body.value
-    }
-
-    var response = await serviceWalmart.post(enumVal.url, body)
-
-    console.log("response:", response)
+    console.log("View inutil")
     return res.json({
-      status:status.SUCCESS,
-      result:{
-        status: response.status,
-        statusText: response.statusText
-        }
+      status:status.SUCCESS
       });
 });
 

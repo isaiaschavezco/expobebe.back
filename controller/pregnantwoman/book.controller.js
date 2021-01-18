@@ -7,11 +7,6 @@ const serviceUtilities = require('../../services/Utilities')
 
 const { BookPregnant } = require('./../../models/Books')
 
-// const requireLogin = passport.authenticate('jwt', {
-//   session: false,
-//   failureRedirect: '/api/error'
-// })
-
 bookCrl.createBook = async (req, res) => {
   try {
     let params = req.body

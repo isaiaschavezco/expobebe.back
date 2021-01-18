@@ -12,7 +12,7 @@ const {
   getProductsWithPagination,
   postExample,
   updateProduct
-} = require('../../controller/newlyborn/product.controller')
+} = require('../../controller/underThreeYears/product.controller')
 
 router.get('/getAllTrademarks', getAllTrademarks)
 router.get('/getAllCategories', getAllCategories)

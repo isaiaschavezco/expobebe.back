@@ -8,7 +8,7 @@ const {
   getBook,
   getBooksByPagination,
   updateBook
-} = require('../../controller/newlyborn/book.controller')
+} = require('../../controller/underThreeYears/book.controller')
 
 router.post('/', createBook)
 router.get('/:bookId', getBook)

@@ -3,7 +3,7 @@ const status = require('../../codes/rest')
 const config = require('../../config/keys')
 const serviceCards = require('../../services/Cards')
 const serviceUser = require('../../services/Users')
-const {CardPregnant} = require('../../models/Cards')
+const {CardUnderThreeYears} = require('../../models/Cards')
 
 cardCtrl.getCardsWithPagination = async (req, res) => {
   try {
@@ -26,7 +26,7 @@ cardCtrl.getCardsWithPagination = async (req, res) => {
       filter.status = req.query.status
     }
 
-    const cards = await serviceUser.getAllWithPagination(filter, skip, limit,CardPregnant)
+    const cards = await serviceUser.getAllWithPagination(filter, skip, limit,CardUnderThreeYears)
 
     console.log('filter:', filter)
     return res.json({
@@ -48,7 +48,7 @@ cardCtrl.getCardsWithPagination = async (req, res) => {
 cardCtrl.getAllCardsByUserId = async (req, res) => {
   try {
     console.log('getAllCardsByUserId', req.query)
-    var cards = await serviceCards.getAllCardsByUserId(req,CardPregnant,"ProductsPregnant")
+    var cards = await serviceCards.getAllCardsByUserId(req,CardUnderThreeYears,"ProductsUnderThreeYears")
     return res.json({
       status: status.SUCCESS,
       result: {
@@ -104,7 +104,7 @@ cardCtrl.updateCard = async (req, res) => {
         status: status.ID_INVALID_PATCH_CARD
       })
     }
-    const card = await serviceCards.patchCard(req.params.cardId, req,CardPregnant)
+    const card = await serviceCards.patchCard(req.params.cardId, req,CardUnderThreeYears)
     return res.json({
       status: status.SUCCESS,
       result: {

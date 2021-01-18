@@ -24,7 +24,7 @@
         return decipheredValue
       },
 
-     getAllEventsWithPagination : async function(type, filter, skip, limit, sort){
+     getAllEventsWithPagination : async function(type,typeProduct, filter, skip, limit, sort){
        try {
          var filter2 = {
            skip:(limit * skip) - limit,
@@ -33,7 +33,7 @@
          if(sort){
            filter2.sort = sort
          }
-
+          console.log("TYPE:",typeProduct)
          console.log("filter2:", filter2)
           return type
            .find(
@@ -41,7 +41,7 @@
              {},
              filter2
            )
-           .populate('products')
+           .populate(typeProduct)
            .then(objects=>{
              // console.log("objects:", objects)
              return objects

@@ -10,7 +10,7 @@ const {
   createChat,
   getEvent,
   createComment
-} = require('../../controller/newlyborn/chat.controller')
+} = require('../../controller/pregnantwoman/chat.controller')
 
 router.post('/', createChat)
 router.post('/:chatId/comment/', createComment)

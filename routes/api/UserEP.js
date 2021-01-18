@@ -1,23 +1,11 @@
- /**
-  * @Author: Guillermo
-  * @Date:   2020-08-26T16:26:32-05:00
-  * @Email:  g.correa@kimeras-studio.com
-  * @Project: Juguetilandia API REST
- * @Last modified by:   memo
- * @Last modified time: 2020-10-29T12:05:28-06:00
-  * @License: MIT
-  */
   const express = require("express");
   const router = express.Router();
   const status  = require("../../codes/rest")
-  const configWalmart = require("../../config/walmart")
   const bcrypt = require("bcryptjs");
   const jwt = require("jsonwebtoken");
   const keys = require("../../config/keys");
-  const serviceWalmart = require("../../services/Walmart")
   const User = require("../../models/Users")
   const mongoose = require("mongoose");
-
   const crypto = require('crypto');
 
   var algorithm = keys.CRYPTP_ALGORITHM;
@@ -230,13 +218,6 @@
                        "phoneNumber": decipheredPhone,
                     }
 
-                    var result = serviceWalmart.register({
-                       "email" : decipheredEmail,
-                       "name"  : decipheredName,
-                       "phone" : decipheredPhone,
-                       "verification_code":verificationCode
-                    })
-
                     res.json({
                       status:status.SUCCESS,
                       result:data
@@ -291,9 +272,6 @@ router.post("/recovery",
       bcrypt.hash(req.body.password, salt, (err, hash) => {
         update.password = hash
         // update.isValidated = false //Para no detener a los usuarios
-
-
-
         var filter = { email: cipheredEmail }
         User.findOne(
             filter,
@@ -312,12 +290,6 @@ router.post("/recovery",
                 )
                 .then(user=>{
                   if(user){
-                    var data = {
-                      "email":req.body.email,
-                      "verification_code":user.verificationCode
-                    }
-                    const url = configWalmart.SERVER_WALMART + configWalmart.URL_RECOVERY
-                    var result =  serviceWalmart.post(url, data)
                     res.json({
                       status:status.SUCCESS,
                     })
@@ -355,11 +327,7 @@ router.post("/sendEmail4Code",
           if (!user) {
             return res.status(400).json({ status:status.ERROR_SERVER_001 });
           } else {
-            const url = configWalmart.SERVER_WALMART + configWalmart.URL_RECOVERY
-            var result = serviceWalmart.post(url, {
-              email:req.body.email,
-              verification_code:user.verificationCode
-            })
+
             res.json({
               status:status.SUCCESS,
             })
@@ -432,13 +400,6 @@ router.post("/validate",
       res.status(500).send({
           status:errorServer
       });
-    } finally {
-
-        var data = {
-          "email":req.body.email,
-        }
-        const url = configWalmart.SERVER_WALMART + configWalmart.URL_VERI_ACCOUNT
-        var result =  serviceWalmart.post(url, data)
     }
 
 });

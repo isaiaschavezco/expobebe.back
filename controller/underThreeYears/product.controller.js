@@ -6,18 +6,18 @@ const serviceCategories = require('../../services/Categories')
 const serviceProducts = require('../../services/Products')
 const serviceGenerics = require('../../services/Generic')
 
- const {TrademarkPregnant} = require("../../models/joins/Trademarks");
- const {CategoryPregnant} = require("../../models/joins/Categories");
+ const {TrademarkUnderThreeYears} = require("../../models/joins/Trademarks");
+ const {CategoryUnderThreeYears} = require("../../models/joins/Categories");
 
 
-const {ProductPregnant} = require('../../models/Products')
+const {ProductUnderThreeYears} = require('../../models/Products')
 const {
   DuplicateDataError
 } = require('../../models/errors/JuguetilandiaErrors')
 
 productCrl.getAllTrademarks = async (req, res) => {
   try {
-    const trademarks = await serviceTrademarks.getAllTrademarks(TrademarkPregnant)
+    const trademarks = await serviceTrademarks.getAllTrademarks(TrademarkUnderThreeYears)
     return res.json({
       status: status.SUCCESS,
       result: {
@@ -35,7 +35,7 @@ productCrl.getAllTrademarks = async (req, res) => {
 
 productCrl.getAllCategories  = async (req, res) => {
   try {
-    var categories = await serviceCategories.getAllCategories(CategoryPregnant)
+    var categories = await serviceCategories.getAllCategories(CategoryUnderThreeYears)
     return res.json({
       status: status.SUCCESS,
       result: {
@@ -63,15 +63,15 @@ productCrl.getProductsWithPagination = async (req, res) => {
           : req.query.limit
       ) || config.RES_PER_PAGE
 
-    var categories = await serviceProducts.getCategoriesBySubcategories(req,CategoryPregnant)
+    var categories = await serviceProducts.getCategoriesBySubcategories(req,CategoryUnderThreeYears)
     console.log('categories===>', categories)
     var products = await serviceProducts.getAllProducts(
       req,
       skip,
       limit,
       categories,
-      ProductPregnant,
-      'TrademarksPregnant'
+      ProductUnderThreeYears,
+      'TrademarksUnderThreeYears'
     )
     return res.json({
       status: status.SUCCESS,
@@ -90,7 +90,7 @@ productCrl.getProductsWithPagination = async (req, res) => {
 
 productCrl.getProduct = async (req, res) => {
   try {
-    const product = await serviceGenerics.read(ProductPregnant, req.params.productId)
+    const product = await serviceGenerics.read(ProductUnderThreeYears, req.params.productId)
 
     return res.json({
       status: status.SUCCESS,
@@ -120,7 +120,7 @@ productCrl.createProduct = async (req, res)=> {
         status: status.INVALID_DATA_3
       })
     } else {
-      var product = await serviceProducts.create(req.body,ProductPregnant)
+      var product = await serviceProducts.create(req.body,ProductUnderThreeYears)
       return res.json({
         status: status.SUCCESS,
         result: {
@@ -161,7 +161,7 @@ productCrl.updateProduct = async (req, res)=> {
     if (req.body.video) attributes.video = req.body.video
 
     var product = await serviceGenerics.patch(
-      ProductPregnant,
+      ProductUnderThreeYears,
       attributes,
       req.params.productId
     )
@@ -189,7 +189,7 @@ productCrl.deleteProduct = async (req, res)=> {
         status: status.ID_INVALID_GENERIC_001
       })
     } else {
-      var result = await serviceGenerics.delete(ProductPregnant, req.params.productId)
+      var result = await serviceGenerics.delete(ProductUnderThreeYears, req.params.productId)
       console.log('result:', result)
 
       if (result && result.ok == 1 && result.n > 0) {
@@ -217,7 +217,7 @@ productCrl.deleteProduct = async (req, res)=> {
 
 productCrl.getCombobox = async (req, res)=> {
   try {
-    ProductPregnant.find({}, { name: 1 }).then(products => {
+    ProductUnderThreeYears.find({}, { name: 1 }).then(products => {
       return res.json({
         status: status.SUCCESS,
         result: {
@@ -248,7 +248,7 @@ productCrl.filterByTrademark = async (req, res)=> {
   console.log('req.params.tradeMarkId:', req.params.tradeMarkId)
   
   try {
-    ProductPregnant.find(
+    ProductUnderThreeYears.find(
       {
         trademarks: {
           $in: [req.params.tradeMarkId]

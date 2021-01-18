@@ -1,11 +1,7 @@
 
   const trademarkCtrl = {}
 const status  = require("../../codes/rest")
- const config = require("../../config/keys")
  const serviceGenerics = require("../../services/Generic")
- const bcrypt = require("bcryptjs");
- const jwt = require("jsonwebtoken");
- const keys = require("../../config/keys");
  const {TrademarkNewlyBorn} = require("./../../models/joins/Trademarks")
 
 

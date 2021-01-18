@@ -1,18 +1,14 @@
 
   const trademarkCtrl = {}
 const status  = require("../../codes/rest")
- const config = require("../../config/keys")
  const serviceGenerics = require("../../services/Generic")
- const bcrypt = require("bcryptjs");
- const jwt = require("jsonwebtoken");
- const keys = require("../../config/keys");
- const {TrademarkNewlyBorn} = require("./../../models/joins/Trademarks")
+ const {TrademarkPregnant} = require("./../../models/joins/Trademarks")
 
 
   trademarkCtrl.getTrademark = async(req, res) =>{
    try {
      var  trademark = await serviceGenerics.read(
-       TrademarkNewlyBorn, req.params.tradeMarkId)
+       TrademarkPregnant, req.params.tradeMarkId)
 
      return res.json({
           status : status.SUCCESS,
@@ -33,7 +29,7 @@ const status  = require("../../codes/rest")
   trademarkCtrl.createTrademark= async (req, res) => {
    try {
      var  trademark = await serviceGenerics.create(
-       "TrademarkNewlyBorn", req.body)
+       "TrademarkPregnant", req.body)
 
      return res.json({
           status : status.SUCCESS,
@@ -58,7 +54,7 @@ const status  = require("../../codes/rest")
         if(req.body.color) attributes.color = req.body.color
 
         var trademark = await serviceGenerics.patch(
-          TrademarkNewlyBorn, attributes, req.params.tradeMarkId
+          TrademarkPregnant, attributes, req.params.tradeMarkId
         )
         return res.json({
              status : status.SUCCES_UPDATE,
@@ -84,7 +80,7 @@ const status  = require("../../codes/rest")
             });
         }else{
           var result = await serviceGenerics.delete(
-            TrademarkNewlyBorn,  req.params.tradeMarkId
+            TrademarkPregnant,  req.params.tradeMarkId
           )
           console.log("result:", result)
 

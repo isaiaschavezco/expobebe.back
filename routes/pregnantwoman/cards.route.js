@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();  
-const {createCard,getAllCardsByUserId,getCardsWithPagination,getVideo,updateCard} = require('../../controller/newlyborn/cards.controller')
+const {createCard,getAllCardsByUserId,getCardsWithPagination,getVideo,updateCard} = require('../../controller/pregnantwoman/cards.controller')
 
  router.get("/pagination/:skip",getCardsWithPagination)
  router.get("/getAllCardsByUserId",getAllCardsByUserId)

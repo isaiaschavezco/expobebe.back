@@ -2,8 +2,8 @@
   "name": "frmznVentasPos2Mongo",
   "license": "ISC",
   "scripts": {
-    "dev": "nodemon ./server.js",
-    "start": "node ./server.js"
+    "dev": "nodemon ./",
+    "start": "node ./"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.20",

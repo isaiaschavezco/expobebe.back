@@ -11,7 +11,7 @@ const {
   getEvent,
   getEventWithPagination,
   updateEvent
-} = require('../../controller/newlyborn/event.controller')
+} = require('../../controller/underThreeYears/event.controller')
 
 router.post('/', createEvent)
 router.get('/:eventId', getEvent)

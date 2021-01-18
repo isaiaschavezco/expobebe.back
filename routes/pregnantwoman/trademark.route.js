@@ -5,10 +5,10 @@ const {
   deleteTrademark,
   getTrademark,
   updateTradeMark
-} = require('../../controller/newlyborn/trademark.controller')
+} = require('../../controller/pregnantwoman/trademark.controller')
 
-router.post('/', createTrademark)
 router.get('/:tradeMarkId', getTrademark)
+router.post('/', createTrademark)
 router.patch('/:tradeMarkId', updateTradeMark)
 router.delete('/:tradeMarkId', deleteTrademark)
 

@@ -1,13 +1,11 @@
 const eventCtrl = {}
   const express = require("express");
-  const passport = require("passport");
   const status  = require("../../codes/rest")
   const config = require("../../config/keys")
   const serviceEvents = require("../../services/Events")
   const serviceGenerics = require("../../services/Generic")
   const serviceUtilities = require("../../services/Utilities")
-  const serviceUsers = require("../../services/Users")
- const {EventNewlyBorn} = require("../../models/Events")
+ const {EventPregnant} = require("../../models/Events")
 
   var moment = require('moment');
 
@@ -15,10 +13,7 @@ const eventCtrl = {}
 eventCtrl.createEvent= async (req, res)=>{
     try {
       const params = req.body
-      console.log("params:", params)
-      const  evento = await serviceGenerics.create(
-        "EventNewlyBorn", params)
-
+      const  evento = await serviceGenerics.create("EventPregnant", params)
       return res.json({
            status : status.SUCCESS,
            result : {
@@ -26,7 +21,7 @@ eventCtrl.createEvent= async (req, res)=>{
            }})
     } catch (e) {
       console.log("events.catch", e)
-      var errorServer = status.ERROR_SERVER
+      const errorServer = status.ERROR_SERVER
       errorServer.detail = e.message
       res.status(500).send({
           status:errorServer
@@ -40,7 +35,7 @@ eventCtrl.getEvent= async (req, res)=>{
          try {
 
            const evento = await serviceEvents.getOne(
-             req.params.eventId,EventNewlyBorn)
+             req.params.eventId,EventPregnant)
 
             return res.json({
               status:status.SUCCESS,
@@ -50,7 +45,7 @@ eventCtrl.getEvent= async (req, res)=>{
               });
 
          } catch (err) {
-           var errorServer = status.ERROR_SERVER
+           const errorServer = status.ERROR_SERVER
            errorServer.detail = err.message
            res.status(500).send({
                status:errorServer
@@ -62,7 +57,7 @@ eventCtrl.getEvent= async (req, res)=>{
 eventCtrl.updateEvent= async (req, res)=>{
         try {
           console.log("/:eventId->", req.body)
-          var attributes = {}
+          let attributes = {}
           if(req.body.name){
              attributes.name = req.body.name
           }
@@ -92,7 +87,7 @@ eventCtrl.updateEvent= async (req, res)=>{
             attributes.status = req.body.status
           }
           console.log("PATCH->attributes:", attributes)
-          const event = await serviceGenerics.patch(EventNewlyBorn,
+          const event = await serviceGenerics.patch(EventPregnant,
             attributes,
             req.params.eventId)
 
@@ -121,7 +116,7 @@ eventCtrl.updateEvent= async (req, res)=>{
                 });
             }else{
               var result = await serviceGenerics.delete(
-                EventNewlyBorn,  req.params.eventId
+                EventPregnant,  req.params.eventId
               )
               console.log("result:", result)
 
@@ -213,7 +208,7 @@ eventCtrl.updateEvent= async (req, res)=>{
              date:-1
            }
            var events = await serviceUtilities.getAllEventsWithPagination(
-                              EventNewlyBorn, filter, skip, limit, sort)
+                              EventPregnant,"ProductsPregnant", filter, skip, limit, sort)
 
            return res.json({
               status:status.SUCCESS,

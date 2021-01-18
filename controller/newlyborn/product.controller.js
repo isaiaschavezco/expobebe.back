@@ -12,8 +12,7 @@ const serviceGenerics = require('../../services/Generic')
 
 const {ProductNewlyBorn} = require('../../models/Products')
 const {
-  DuplicateDataError,
-  InternalError
+  DuplicateDataError
 } = require('../../models/errors/JuguetilandiaErrors')
 
 productCrl.getAllTrademarks = async (req, res) => {
@@ -64,7 +63,6 @@ productCrl.getProductsWithPagination = async (req, res) => {
           : req.query.limit
       ) || config.RES_PER_PAGE
 
-    // var products = await serviceProducts.getAllProducts(req, skip, limit)
     var categories = await serviceProducts.getCategoriesBySubcategories(req,CategoryNewlyBorn)
     console.log('categories===>', categories)
     var products = await serviceProducts.getAllProducts(
