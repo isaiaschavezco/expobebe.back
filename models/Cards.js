@@ -1,34 +1,24 @@
-/**
- * @Author: Guillermo
- * @Date:   2020-08-25T19:04:04-05:00
- * @Email:  g.correa@kimeras-studio.com
- * @Project: Juguetilandia API REST
- * @Last modified by:   memo
- * @Last modified time: 2020-09-21T14:08:42-05:00
- * @License: MIT
- */
-
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const {NEWLYBORN,PREGNED,UNDER} = require('../codes/types')
+
 // Create Schema
 const CardNewlyBornSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: [true, 'El usuario es requerido']
+  email: {
+    type: String,
+    required: [true, 'El email es requerido']
   },
-  products: [
+  gender: {
+    type: String,
+    required: [true, 'El género es requerido']
+  },
+  listItems: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'products'
+      ref: 'ProductsNewlyBorn'
     }
   ],
-  status: {
-    type: String,
-    enum: ['CREATED', 'LOADING', 'SENDED', 'CANCELED'],
-    default: 'CREATED'
-  },
   creationDateMongo: {
     type: Date,
     default: Date.now
@@ -38,22 +28,20 @@ const CardNewlyBornSchema = new Schema({
   }
 })
 const CardPregnantSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: [true, 'El usuario es requerido']
+ email: {
+    type: String ,
+    required: [true, 'El email es requerido']
   },
-  products: [
+  gender: {
+    type: String ,
+    required: [true, 'El género es requerido']
+  },
+  listItems: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'products'
+      ref: 'ProductsPregnant'
     }
   ],
-  status: {
-    type: String,
-    enum: ['CREATED', 'LOADING', 'SENDED', 'CANCELED'],
-    default: 'CREATED'
-  },
   creationDateMongo: {
     type: Date,
     default: Date.now
@@ -63,22 +51,20 @@ const CardPregnantSchema = new Schema({
   }
 })
 const CardUnderThreeYearsSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: [true, 'El usuario es requerido']
+  email: {
+    type: String ,
+    required: [true, 'El email es requerido']
   },
-  products: [
+  gender: {
+    type: String ,
+    required: [true, 'El género es requerido']
+  },
+  listItems: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'products'
+      ref: 'ProductsUnderThreeYears'
     }
   ],
-  status: {
-    type: String,
-    enum: ['CREATED', 'LOADING', 'SENDED', 'CANCELED'],
-    default: 'CREATED'
-  },
   creationDateMongo: {
     type: Date,
     default: Date.now

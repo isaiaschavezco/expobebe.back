@@ -14,13 +14,13 @@ const {
   updateProduct
 } = require('../../controller/newlyborn/product.controller')
 
+router.post('/', createProduct)
 router.get('/getAllTrademarks', getAllTrademarks)
 router.get('/getAllCategories', getAllCategories)
-router.get('/pagination/:skip', getProductsWithPagination)
 router.get('/:productId', getProduct)
-router.post('/', createProduct)
 router.patch('/:productId', updateProduct),
 router.delete('/:productId', deleteProduct)
+router.get('/pagination/:skip', getProductsWithPagination)
 router.get('/get/Combobox', getCombobox)
 router.post('/postExample', postExample)
 router.get('/filterByTrademark/:tradeMarkId', filterByTrademark)

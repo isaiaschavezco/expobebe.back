@@ -9,22 +9,17 @@ const Users = require("./../models/Users")
 const Cards = require("./../models/Cards")
 
 module.exports = {
-  getAllWithPagination : async function(filter, skip, limit, sort,typeCard){
+  getAllWithPagination : async function(filter, skip, limit,typeCard,typeProduct){
     try {
-      var filter2 = {
-        skip:(limit * skip) - limit,
-        limit:limit,
-      }
-      if(sort){
-        filter2.sort = sort
-      }
+      // let filter2 = {
+        // skip:(limit * skip) - limit,
+        // limit:limit,
+      // }
        return typeCard
         .find(
-          filter,
-          {},
-          filter2
+          filter
         )
-        .populate('user products')
+        .populate(typeProduct)
         .then(objects=>{
           return objects
         })

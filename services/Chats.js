@@ -20,61 +20,25 @@
             .findOne({
               eventId:mongoose.Types.ObjectId(id)
             })
-            // .populate('rows rows.user eventId')
             .populate({
                path: 'rows eventId',
                options: {sort: {creationDateMongo: -1}},
                select: 'comment creationDateMongo urlThumbnail eventUrl status type name',
-               populate: {
-                 path: 'user',
-                 model: 'users',
-                 select:'name email'
-               }
             })
             .then(chat=>{
               console.log("getDetail.chat:", chat)
-              // return chat
               if(chat){
-                  console.log()
                   console.log("chat.row:" + JSON.stringify(chat.rows))
-                  console.log()
-                  var resultArray = []
+                  let resultArray = []
                   for (var i = 0; i < chat.rows.length; i++) {
-
                     var rowValue = chat.rows[i]
-                    var user = {}
-                    var userData = rowValue.user
-                    console.log("rowValue["+i+"].user.name:", userData.name)
-                    var decipher2 =  crypto.createDecipher(algorithm, key);
-                    var decipheredName = decipher2.update(userData.name, outputEncoding, inputEncoding);
-                    decipheredName += decipher2.final(inputEncoding);
-                    console.log("decipheredName:"+decipheredName)
-                    // chat.rows[i].user.name = decipheredName
-
-
-                    var decipher3 =  crypto.createDecipher(algorithm, key);
-                    var decipheredEmail = decipher3.update(userData.email, outputEncoding, inputEncoding);
-                    decipheredEmail += decipher3.final(inputEncoding);
-                    console.log("decipheredEmail:" + decipheredEmail)
-                    // chat.rows[i].user.email = decipheredEmail
-
-                    user = {
-                      _id   : userData._id,
-                      name  : decipheredName,
-                      email : decipheredEmail
-                    }
-
-                    var newRow = {
-                      user,
+                    const newRow = {
                       comment : rowValue.comment
                     }
-                    console.log("newRow:" , newRow)
                     resultArray.push(newRow)
                   }
-                  console.log()
                   console.log("resultArray:", resultArray)
-                  console.log()
-                  var newChat = chat
+                  const newChat = chat
                   newChat.rows = resultArray
                   console.log("newChat:", newChat)
                   return {
@@ -84,7 +48,6 @@
                     updatedDateMongo:chat.updatedDateMongo,
                     creationDateMongo:chat.creationDateMongo
                   }
-                  return chat
               }else{
                 return chat
               }

@@ -16,6 +16,7 @@ const {
 } = require('../../models/errors/JuguetilandiaErrors')
 
 productCrl.getAllTrademarks = async (req, res) => {
+  console.log("NEWLY BORN")
   try {
     const trademarks = await serviceTrademarks.getAllTrademarks(TrademarkNewlyBorn)
     return res.json({
@@ -98,6 +99,7 @@ productCrl.getProduct = async (req, res) => {
         product
       }
     })
+    
   } catch (e) {
     console.log('ProductsEp.catch', e)
     const errorServer = status.ERROR_SERVER

@@ -12,21 +12,11 @@ cardCtrl.getCardsWithPagination = async (req, res) => {
     const limit = parseInt(req.query.limit) || config.RES_PER_PAGE
 
     const filter = {}
-    if (req.query.matchName) {
-      const users = await serviceUser.getIdsByFilter(req.query.matchName)
-      console.log('users:', users)
-      if (users) {
-        filter.user = {
-          $in: users
-        }
-      }
-    }
+    if (req.query.email) filter.email = req.query.email 
+    
+    if (req.query.gender) filter.gender = req.query.gender
 
-    if (req.query.status) {
-      filter.status = req.query.status
-    }
-
-    const cards = await serviceUser.getAllWithPagination(filter, skip, limit,CardUnderThreeYears)
+    const cards = await serviceUser.getAllWithPagination(filter, skip, limit,CardUnderThreeYears,"ProductsUnderThreeYears")
 
     console.log('filter:', filter)
     return res.json({
@@ -36,7 +26,7 @@ cardCtrl.getCardsWithPagination = async (req, res) => {
       }
     })
   } catch (err) {
-    console.log('UtilitiesEP->getAllBanners.err:', err)
+    console.log('UtilitiesEP->getAllCards.err:', err)
     var errorServer = status.ERROR_SERVER
     errorServer.detail = err.message
     res.status(500).send({
@@ -44,6 +34,7 @@ cardCtrl.getCardsWithPagination = async (req, res) => {
     })
   } 
 }
+
 
 cardCtrl.getAllCardsByUserId = async (req, res) => {
   try {
@@ -67,28 +58,19 @@ cardCtrl.getAllCardsByUserId = async (req, res) => {
 
 cardCtrl.createCard = async (req, res) => {
   try {
-    if (req.body.user == null) {
-      return res.json({
-        status: status.ID_INVALID_CREATE_CARD
-      })
-    }
-    var user = await serviceUser.getById(req.body.user)
-    if (user == null) {
-      return res.json({
-        status: status.ERROR_SERVER_001
-      })
-    } else {
-      const card = await serviceCards.createCard(req)
+      console.log(req.body)
+
+      const card = await serviceCards.createCard(req.body,CardUnderThreeYears)
     return res.json({
       status: status.SUCCESS,
       result: {
         card
       }
     })
-    }
     
   } catch (err) {
     const errorServer = status.ERROR_SERVER
+    console.log(err)
     errorServer.detail = err.message
     res.status(500).send({
       status: errorServer

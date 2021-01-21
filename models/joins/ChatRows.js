@@ -9,27 +9,15 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const ChatRowNewlyBornSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: [true, 'El identificador de usuario es requerido.']
-  },
   comment: {
     type: String
   },
-
   creationDateMongo: {
     type: Date,
     default: Date.now
   }
 })
 const ChatRowPregnantSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: [true, 'El identificador de usuario es requerido.']
-  },
-
   comment: {
     type: String
   },
@@ -40,12 +28,6 @@ const ChatRowPregnantSchema = new Schema({
   }
 })
 const ChatRowUnderThreeYearsSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-    required: [true, 'El identificador de usuario es requerido.']
-  },
-
   comment: {
     type: String
   },

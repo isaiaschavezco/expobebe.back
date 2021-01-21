@@ -65,30 +65,22 @@ cardCtrl.getAllCardsByUserId = async (req, res) => {
   }
 }
 
+
 cardCtrl.createCard = async (req, res) => {
   try {
-    if (req.body.user == null) {
-      return res.json({
-        status: status.ID_INVALID_CREATE_CARD
-      })
-    }
-    var user = await serviceUser.getById(req.body.user)
-    if (user == null) {
-      return res.json({
-        status: status.ERROR_SERVER_001
-      })
-    } else {
-      const card = await serviceCards.createCard(req)
+      console.log(req.body)
+
+      const card = await serviceCards.createCard(req.body,CardPregnant)
     return res.json({
       status: status.SUCCESS,
       result: {
         card
       }
     })
-    }
     
   } catch (err) {
     const errorServer = status.ERROR_SERVER
+    console.log(err)
     errorServer.detail = err.message
     res.status(500).send({
       status: errorServer

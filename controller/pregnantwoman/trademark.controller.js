@@ -7,6 +7,7 @@ const status  = require("../../codes/rest")
 
   trademarkCtrl.getTrademark = async(req, res) =>{
    try {
+     console.log("ESTOY POR CONTROLLER")
      var  trademark = await serviceGenerics.read(
        TrademarkPregnant, req.params.tradeMarkId)
 
@@ -16,7 +17,7 @@ const status  = require("../../codes/rest")
             trademark
           }})
    } catch (e) {
-     console.log("Trademarks.catch", e)
+     console.log("Trademarks.catchasdfasdf", e)
      var errorServer = status.ERROR_SERVER
      errorServer.detail = e.message
      res.status(500).send({

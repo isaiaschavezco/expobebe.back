@@ -99,7 +99,7 @@ const ProductPregnantSchema = new Schema({
   categories: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'categories'
+      ref: 'CategorysPregnant'
     }
   ],
 
@@ -154,7 +154,7 @@ const ProductUnderThreeYearsSchema = new Schema({
   categories: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'categories'
+      ref: 'CategorysUnderThreeYears'
     }
   ],
 

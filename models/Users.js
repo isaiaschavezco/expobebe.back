@@ -8,14 +8,6 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  name: {
-    type: String,
-    required: [true, 'El nombre es requerido']
-  },
-  phoneNumber: {
-    type: String,
-    required: [true, 'El teléfono es requerido.']
-  },
   password: {
     type: String,
     required: true,
@@ -24,15 +16,6 @@ const UserSchema = new Schema({
   creationDate: {
     type: Date,
     default: Date.now
-  },
-  isValidated: {
-    type: Boolean
-  },
-  verificationCode: {
-    type: String
-  },
-  dateConfirmation: {
-    type: Date
   }
 })
 

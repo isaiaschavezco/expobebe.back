@@ -3,6 +3,7 @@
  module.exports = {
 
  	getAllTrademarks : async function(type) {
+     console.log("gettt trademarks",type)
     try {
       return type
         .find()

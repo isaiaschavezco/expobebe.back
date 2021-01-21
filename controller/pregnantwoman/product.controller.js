@@ -16,7 +16,10 @@ const {
 } = require('../../models/errors/JuguetilandiaErrors')
 
 productCrl.getAllTrademarks = async (req, res) => {
+    console.log("PREGNED")
+
   try {
+    console.log("Obteniendo trademarks pregnant")
     const trademarks = await serviceTrademarks.getAllTrademarks(TrademarkPregnant)
     return res.json({
       status: status.SUCCESS,

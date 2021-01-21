@@ -7,24 +7,22 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const VideoSchema = new Schema({
-  name: {
+  title: {
     type: String,
     required: true
   },
-  nicknames: [
-    {
-      type: String
-    }
-  ],
   videoURL: {
-    type: String
+    type: String,
+    required:true
   },
-
+  type: {
+    type: String,
+    required:true
+  },
   creationDate: {
     type: Date,
     default: Date.now
   },
-
   updatedDateMongo: {
     type: Date
   }

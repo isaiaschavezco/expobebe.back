@@ -13,12 +13,11 @@
 
  module.exports = {
 
-  getAllCardsByUserId : async function(req,typeCard,typeProduct){
+  getAllCardsByEmail : async function(req,typeCard,typeProduct){
       try {
-        var filter = {
-            user:mongoose.Types.ObjectId(req.query.userId)
+        let filter = {
+            email:mongoose.Types.ObjectId(req.query.email)
         }
-        console.log("filter:", filter)
 
         if(req.query.status != null){
           filter.status =  req.query.status
@@ -40,11 +39,12 @@
       }
   },
 
-  createCard: async function(req){
+  createCard: async function(data,type){
     try {
-      var NEW_CARD = new Cards({
-        user:req.body.user,
-        products:req.body.products,
+      const NEW_CARD = new type({
+        gender:data.gender,
+        email:data.email,
+        listItems:data.listItems,
       })
       return NEW_CARD
         .save()
@@ -63,7 +63,7 @@
 
   patchCard : async function(cardId, req,typeCard){
     try {
-      var update = req.body
+      let update = req.body
 
       return typeCard
         .findOneAndUpdate(

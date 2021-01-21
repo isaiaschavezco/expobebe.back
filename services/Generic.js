@@ -1,12 +1,4 @@
-/**
- * @Author: Guillermo
- * @Date:   2020-08-31T11:49:06-05:00
- * @Email:  g.correa@kimeras-studio.com
- * @Project: Juguetilandia API REST
- * @Last modified by:   memo
- * @Last modified time: 2020-10-17T01:41:54-05:00
- * @License: MIT
- */
+//No borrar estas importaciones ya que sí se usan
  const {TrademarkNewlyBorn,TrademarkPregnant,TrademarkUnderThreeYears} = require("./../models/joins/Trademarks")
  const Videos = require("./../models/Videos")
  const {EventNewlyBorn,EventPregnant,EventUnderThreeYears} = require("./../models/Events")
