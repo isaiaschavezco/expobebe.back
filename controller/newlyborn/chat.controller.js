@@ -10,25 +10,28 @@ const {ChatRowNewlyBorn} = require('../../models/joins/ChatRows')
 
 
 chatCtrl.createChat  = async (req, res)=> {
-  try
-  {
-    const {eventId}= req.body.eventId
-    if (!eventId) {
-      return res.json({
-        status: status.ID_INVALID_CREATE_CHAT
-      })
-    }
-
-    const event = await serviceGenerics.read(EventNewlyBorn, eventId)
-    if (!event) {
-      return res.json({
-        status: status.ID_INVALID_CREATE_CHAT
+    console.log("Creando chat born");
+    
+    try
+    {
+      const { eventId } = req.body.eventId
+      console.log("Creando chat",req.body);
+      if (req.body.eventId===null) {
+        return res.json({
+          status: status.ID_INVALID_CREATE_CHAT
+        })
+      }
+      
+      const event = await serviceGenerics.read(EventNewlyBorn, req.body.eventId)
+      if (!event) {
+        return res.json({
+          status: status.ID_INVALID_CREATE_CHAT
       })
     }
     const filter = {
-      eventId: mongoose.Types.ObjectId(eventId)
+      eventId: mongoose.Types.ObjectId(req.body.eventId)
     }
-
+    
     const chat = await serviceGenerics.upsert(ChatNewlyBorn, filter, req.body)
     console.log('chat:', chat)
     return res.json({
@@ -48,12 +51,13 @@ chatCtrl.createChat  = async (req, res)=> {
 }
 
 chatCtrl.createComment =  async (req, res)=> {
+  console.log("Creando comentario born");
   try
   {
     const chatId = req.params.chatId
     const {comment} = req.body 
     console.log('/comment/:chatId',chatId )
-
+    
     if (!comment) {
       return res.json({
         status: status.ID_INVALID_CREATE_COMMENT
@@ -88,6 +92,7 @@ chatCtrl.createComment =  async (req, res)=> {
 }
 
 chatCtrl.getEvent = async (req, res)=> {
+  console.log("Obteniendo evento born");
   try
   {
     const chat = await serviceChats.getDetail(req.params.eventId,ChatRowNewlyBorn)

@@ -16,6 +16,11 @@
  module.exports = {
    getDetail: async function(id,type){
      try {
+       console.log("Id evento: ",id,type)
+       let d = await type.findOne({
+              eventId:id
+       } )  
+       console.log("Encnotrado?,",d);
        return type
             .findOne({
               eventId:mongoose.Types.ObjectId(id)
@@ -23,7 +28,7 @@
             .populate({
                path: 'rows eventId',
                options: {sort: {creationDateMongo: -1}},
-               select: 'comment creationDateMongo urlThumbnail eventUrl status type name',
+               select: 'comment creationDateMongo ',
             })
             .then(chat=>{
               console.log("getDetail.chat:", chat)

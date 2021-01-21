@@ -192,7 +192,8 @@
               new: true
             }
           )
-          .then(object=>{
+          .then( object => {
+            console.log("Se ha creado algo", object);
             return object
           })
           .catch(e=>{

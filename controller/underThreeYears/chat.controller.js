@@ -4,15 +4,19 @@ const status = require('../../codes/rest')
 
 const {ChatUnderThreeYears} = require('../../models/joins/Chats')
 const {EventUnderThreeYears} = require('../../models/Events')
-const Users = require('../../models/Users')
 const serviceGenerics = require('../../services/Generic')
 const serviceChats = require('../../services/Chats')
 const {ChatRowUnderThreeYears} = require('../../models/joins/ChatRows')
 
 
 chatCtrl.createChat  = async (req, res)=> {
-  try {
-    if (!req.body.eventId) {
+  console.log("Creando chat pregned");
+  try
+  {
+    const { eventId } = req.body.eventId
+        console.log("Creando chat",req.body);
+
+    if (req.body.eventId==="null") {
       return res.json({
         status: status.ID_INVALID_CREATE_CHAT
       })
@@ -47,27 +51,28 @@ chatCtrl.createChat  = async (req, res)=> {
 }
 
 chatCtrl.createComment =  async (req, res)=> {
-  try {
-    console.log('/comment/:chatId', req.params.chatId)
-    console.log('')
-    if (req.body.user == null || req.body.comment == null) {
+  console.log("Creando comentario pregned");
+  try
+  {
+    const chatId = req.params.chatId
+    const {comment} = req.body 
+    console.log('/comment/:chatId',chatId )
+
+    if (!comment) {
       return res.json({
         status: status.ID_INVALID_CREATE_COMMENT
       })
     } else {
-      var chat = await serviceGenerics.read(ChatUnderThreeYears, req.params.chatId)
-      var user = await serviceGenerics.read(Users, req.body.user)
-      if (chat == null || user == null) {
+      const chat = await serviceGenerics.read(ChatUnderThreeYears,chatId)
+      if (!chat) {
         return res.json({
           status: status.ID_INVALID_CREATE_COMMENT
         })
       } else {
         const message = await serviceGenerics.create('ChatRowUnderThreeYears', req.body)
         console.log('message:', message)
-        // if(message){
-        const chat = await serviceChats.pushRow(req.params.chatId, message._id,ChatRowUnderThreeYears)
+        const chat = await serviceChats.pushRow(chatId, message._id,ChatUnderThreeYears)
         console.log('chat:', chat)
-        // }
         return res.json({
           status: status.SUCCESS,
           result: {
@@ -87,8 +92,10 @@ chatCtrl.createComment =  async (req, res)=> {
 }
 
 chatCtrl.getEvent = async (req, res)=> {
-  try {
-    const chat = await serviceChats.getDetail(req.params.eventId,ChatRowUnderThreeYears)
+  try
+  {
+    console.log("Obteniendo datos del evento pregned");
+    const chat = await serviceChats.getDetail(req.params.eventId,ChatUnderThreeYears)
     return res.json({
       status: status.SUCCESS,
       result: {
