@@ -1,15 +1,13 @@
  //constants
- const fs = require('fs');
- const http = require('http');
- const https = require('https');
+
  const morgan = require('morgan')
  //Configs
  const express = require("express");
- const multer = require("multer");
  var mongoose = require('mongoose').set('debug', true);
  var useragent = require('express-useragent');
  const passport = require("passport");
  const bodyParser = require('body-parser');
+
 
  //Endpoints newlyBorn
  //ep = endpoint
@@ -46,16 +44,7 @@
  // Certificate
 //ISAIAS
 
-  // const privateKey = fs.readFileSync('/etc/letsencrypt/live/dev.losmagicians.mx/privkey.pem', 'utf8');
-  // const certificate = fs.readFileSync('/etc/letsencrypt/live/dev.losmagicians.mx/cert.pem', 'utf8');
-  // const ca = fs.readFileSync('/etc/letsencrypt/live/dev.losmagicians.mx/chain.pem', 'utf8');
-  // const lets = fs.readFileSync('/etc/letsencrypt/live/dev.losmagicians.mx/eCnXScWhYCU7yp34mWhklAAOAJStB5oQJGpuYb1N4to', 'utf8');
 
-  // const credentials = {
-  // 	key: privateKey,
-  // 	cert: certificate,
-  // 	ca: ca
-  // };
 
 
  passport.authenticate('jwt', {session: false})
@@ -105,31 +94,15 @@ app.use( "/api/users", user_ep );
  app.use( "/api/error", error_newlyBorn );
  app.use("/api/videos", videos_ep);
  app.use("/api/utilities", utilities_ep);
-//  app.get('/.well-known/acme-challenge/LZOwdOwmWO4JiFSwVdnFQ0sqoX4WhoaLVicqAnzsN_c', function(req, res) {
 
-  // res.send(lets);
-  // });
 
 
  // Starting  http & https servers
-  const httpServer = http.createServer(app);
+  
   // const httpsServer = https.createServer(credentials, app);
-  const PORT = 3456 
+  const PORT = 3000 
 
-  httpServer.listen(PORT, () => {
+  app.listen(PORT, () => {
   	console.log(`API REST Juguetilandia HTTP Server running on port ${PORT}`);
   });
 
-  //  httpsServer.listen(443, () => {
-  //  	console.log('API REST Juguetilandia HTTPS Server running on port 443');
-  //  });
-
-//    //dev.losmagicians.mx/.well-known/acme-challenge/eCnXScWhYCU7yp34mWhklAAOAJStB5oQJGpuYb1N4to
-
-//    LZOwdOwmWO4JiFSwVdnFQ0sqoX4WhoaLVicqAnzsN_c.8colhlS4Nv-6ZihI7UyovVBM69yWB7N1_Kg3                                                                                                             sqmuDJY
-
-// And make it available on your web server at this URL:
-
-// http://dev.losmagicians.mx/.well-known/acme-challenge/LZOwdOwmWO4JiFSwVdnFQ0sqoX                                                                                                             4WhoaLVicqAnzsN_c
-
-// LZOwdOwmWO4JiFSwVdnFQ0sqoX4WhoaLVicqAnzsN_c.8colhlS4Nv-6ZihI7UyovVBM69yWB7N1_Kg3sqmuDJY
