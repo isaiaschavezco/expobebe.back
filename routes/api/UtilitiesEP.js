@@ -118,7 +118,7 @@
 
               folder = folder.split("'").join("")
               const params = {
-                  Bucket: 'juguetilandia.media', // your s3 bucket name
+                  Bucket: 'expobebe', // your s3 bucket name
                   Key: `${folder}/${fname}`,
                   Body: Buffer.concat(chunks), // concatinating all chunks
                   ACL: 'public-read',

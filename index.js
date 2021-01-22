@@ -1,5 +1,5 @@
  //constants
-
+require ('dotenv').config()
  const morgan = require('morgan')
  //Configs
  const express = require("express");
@@ -93,16 +93,19 @@ app.use( "/api/users", user_ep );
  //General enpoints
  app.use( "/api/error", error_newlyBorn );
  app.use("/api/videos", videos_ep);
- app.use("/api/utilities", utilities_ep);
-
+app.use( "/api/utilities", utilities_ep );
+ 
+app.get( "/", (req,res) => {
+   res.send("Genial!")
+ })
 
 
  // Starting  http & https servers
   
   // const httpsServer = https.createServer(credentials, app);
-  const PORT = 3000 
+  const PORT = process.env.PORT || 3000 
 
   app.listen(PORT, () => {
-  	console.log(`API REST Juguetilandia HTTP Server running on port ${PORT}`);
+  	console.log(`API REST Expo bebe is running on port ${PORT} Felicidades!`);
   });
 
