@@ -28,7 +28,7 @@ const status  = require("../../codes/rest")
 
   trademarkCtrl.createTrademark= async (req, res) => {
    try {
-     var  trademark = await serviceGenerics.create(
+     const trademark = await serviceGenerics.create(
        "TrademarkUnderThreeYears", req.body)
 
      return res.json({

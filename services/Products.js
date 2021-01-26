@@ -82,7 +82,7 @@
           }
         )
         .populate({
-          path:typeTrademark,
+          path:"trademarks",
           select:{
             _id:1,
             name:1
@@ -92,7 +92,8 @@
         .limit(limit)
         .sort({name:1})
         .lean()
-        .then(products=>{
+        .then( products => {
+          console.log("PRODUCTOS ENCONTRADOS:",products,"De :", typeTrademark,typeProduct);
           return products
         })
         .catch(err=>{
@@ -104,8 +105,11 @@
   },
 
   create : async function(body,type) {
-      function create (body){
-        return new type(  //No estoy seguro si esto funcionará
+
+    console.log('creando un producto,',body,type);
+
+      function create (body,typeToCreate){
+        return new typeToCreate(  //No estoy seguro si esto funcionará
             body
             )
             .save({
@@ -116,7 +120,7 @@
             })
       };
       try {
-        return await create(body)
+        return await create(body,type)
       } catch (err) {
         console.log("err:", err)
         if(err.message.toUpperCase().includes("DUPLICATE")){

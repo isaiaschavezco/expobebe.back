@@ -94,7 +94,7 @@ const Trademarks = {
   TrademarkUnderThreeYears: mongoose.model(
     'TrademarksUnderThreeYears',
     TrademarkUnderThreeYearsSchema,
-    'EventsUnderThreeYears'
+    'TrademarksUnderThreeYears'
   )
 }
 

@@ -122,7 +122,7 @@ productCrl.createProduct = async (req, res)=> {
         status: status.INVALID_DATA_3
       })
     } else {
-      var product = await serviceProducts.create(req.body,ProductNewlyBorn)
+      const product = await serviceProducts.create(req.body,ProductNewlyBorn)
       return res.json({
         status: status.SUCCESS,
         result: {

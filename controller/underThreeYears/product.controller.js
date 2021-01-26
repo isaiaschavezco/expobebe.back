@@ -16,6 +16,7 @@ const {
 } = require('../../models/errors/JuguetilandiaErrors')
 
 productCrl.getAllTrademarks = async (req, res) => {
+  console.log("UNDER")
   try {
     const trademarks = await serviceTrademarks.getAllTrademarks(TrademarkUnderThreeYears)
     return res.json({
@@ -71,7 +72,7 @@ productCrl.getProductsWithPagination = async (req, res) => {
       limit,
       categories,
       ProductUnderThreeYears,
-      'TrademarksUnderThreeYears'
+      'TrademarksNewlyBorn'
     )
     return res.json({
       status: status.SUCCESS,
@@ -98,6 +99,7 @@ productCrl.getProduct = async (req, res) => {
         product
       }
     })
+    
   } catch (e) {
     console.log('ProductsEp.catch', e)
     const errorServer = status.ERROR_SERVER
