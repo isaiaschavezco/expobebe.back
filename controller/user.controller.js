@@ -38,8 +38,7 @@ userCtrl.login = async(req, res) => {
 
 
         User.findOne({
-            email:cipheredEmail,
-            isValidated:true
+            email:cipheredEmail
            })
         .then(user => {
         console.log("user:"+JSON.stringify(user))
@@ -52,10 +51,7 @@ userCtrl.login = async(req, res) => {
         console.log("user.password:", user.password)
 
 
-        var decipher2 =  crypto.createDecipher(algorithm, key);
-        var decipheredName = decipher2.update(user.name, outputEncoding, inputEncoding);
-        decipheredName += decipher2.final(inputEncoding);
-        console.log("decipheredName:", decipheredName)
+
 
         bcrypt.compare(
           req.body.password,
@@ -67,26 +63,21 @@ userCtrl.login = async(req, res) => {
               if (isMatch) {
                 console.log("Creating token...")
                 const payload = {
-                              id:user.id,
-                            name:decipheredName,
+                              id:user._id,
                            email:cipheredEmail,
                 };
                 jwt.sign(
                   payload,
                   keys.secretOrKey,
                   {
-                    expiresIn: 31556926 // 1 year in seconds
+                    expiresIn: 3600 * 2 // 1 year in seconds
                     // expiresIn: 60 // 1 minute in seconds
                     // expiresIn: 2592000 // 30 dias
                   },
                   (err, token) => {
-                    console.log("err=>", err)
-                    console.log("token:", token)
+                    
 
-                    var decipher = crypto.createDecipher(algorithm, key);
-                    var decipheredName = decipher.update(user.name, outputEncoding, inputEncoding);
-                    decipheredName += decipher.final(inputEncoding);
-                    console.log("decipheredName:", decipheredName)
+                    
 
                     var decipher2 = crypto.createDecipher(algorithm, key);
                     var decipheredEmail = decipher2.update(user.email, outputEncoding, inputEncoding);
@@ -95,7 +86,7 @@ userCtrl.login = async(req, res) => {
 
                     var userFiltred = {
                        "_id": user._id,
-                       "nombre": decipheredName,
+                       
                        "email": decipheredEmail,
                     }
                     isSuccessful = true
