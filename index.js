@@ -64,7 +64,7 @@ const cors = require('cors')
  app.use(morgan('tiny'));
  app.use(cors())
 
-const whitelist = [ 'http://localhost:3000','http://localhost:3001','https://expobebe.netlify.app/' ]
+const whitelist = [ 'http://localhost:3000','http://localhost:3001','https://expobebe.netlify.app','https://cms-expobebe.netlify.app' ]
  
 const corsOptions = {
   origin: function( origin, callback ) {
