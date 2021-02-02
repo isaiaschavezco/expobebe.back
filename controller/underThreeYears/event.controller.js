@@ -5,7 +5,7 @@ const eventCtrl = {}
   const serviceEvents = require("../../services/Events")
   const serviceGenerics = require("../../services/Generic")
   const serviceUtilities = require("../../services/Utilities")
- const {EventUnderThreeYears} = require("../../models/Events")
+ const {EventUnderThreeYears,EventNewlyBorn,EventPregnant} = require("../../models/Events")
 
   var moment = require('moment');
 
@@ -210,13 +210,71 @@ eventCtrl.updateEvent= async (req, res)=>{
            var sort = {
              date:-1
            }
-           var events = await serviceUtilities.getAllEventsWithPagination(
-                              EventUnderThreeYears,"ProductsUnderThreeYears", filter, skip, limit, sort)
+           var eventsUnder = await serviceUtilities.getAllEventsWithPagination(
+             EventUnderThreeYears, "ProductsUnderThreeYears", filter, skip, limit, sort )
+
+           var eventsPreg = await serviceUtilities.getAllEventsWithPagination(
+             EventPregnant, "ProductsPregnant", filter, skip, limit, sort )
+          
+           var eventsNew = await serviceUtilities.getAllEventsWithPagination(
+             EventNewlyBorn, "ProductsNewlyBorn", filter, skip, limit, sort )
+          let under, neu, preg
+          
+          let ultimo_evento
+          if( eventsUnder[ 0 ] )
+          {
+             under = new Date(eventsUnder[ eventsUnder.length -1 ].date)
+          } else
+          {
+            under = new Date('2026-02-02T21:08:34.068Z')
+          }
+          if( eventsNew[0] )
+          {
+            neu = new Date(eventsNew[ eventsNew.length -1 ].date)
+          } else
+          {
+            neu = new Date('2026-02-02T21:08:34.068Z')
+          }
+          if( eventsPreg[0] )
+          {
+            preg = new Date(eventsPreg[ eventsPreg.length -1 ].date)
+          } else
+          {
+            preg = new Date('2026-02-02T21:08:34.068Z')
+            
+          }
+          
+          console.log("==================");
+          console.log(neu, "|| " ,preg,"|| " ,under);
+          console.log(under < neu, under < preg);
+          console.log("==================");
+          if( under < neu )
+          {
+            if( under < preg )
+            {
+              ultimo_evento = eventsUnder[ eventsUnder.length -1 ]
+            } else
+            {
+              ultimo_evento = eventsPreg[ eventsPreg.length -1 ]
+            }
+          } else if( neu < preg )
+          {
+            ultimo_evento = eventsNew[ eventsNew.length -1 ]
+          } else
+          {
+            ultimo_evento = eventsPreg[ eventsPreg.length -1 ]
+          }
+
+          
 
            return res.json({
               status:status.SUCCESS,
               result:{
-                events
+                events: [ eventsUnder, eventsPreg, eventsNew ],
+                ultimo_evento,
+                eventsUnder,
+                eventsPreg,
+                eventsNew
                 }
            });
         } catch (err) {

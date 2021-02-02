@@ -1,12 +1,3 @@
-/**
- * @Author: Guillermo
- * @Date:   2020-08-25T19:04:04-05:00
- * @Email:  g.correa@kimeras-studio.com
- * @Project: Juguetilandia API REST
- * @Last modified by:   memo
- * @Last modified time: 2020-10-06T17:27:52-05:00
- * @License: MIT
- */
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
