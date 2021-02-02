@@ -210,6 +210,8 @@ eventCtrl.updateEvent= async (req, res)=>{
            var sort = {
              date:-1
            }
+           const events = await serviceUtilities.getAllEventsWithPagination(
+             EventUnderThreeYears, "ProductsUnderThreeYears", filter, skip, limit, sort )
            var eventsUnder = await serviceUtilities.getAllEventsWithPagination(
              EventUnderThreeYears, "ProductsUnderThreeYears", filter, skip, limit, sort )
 
@@ -270,7 +272,7 @@ eventCtrl.updateEvent= async (req, res)=>{
            return res.json({
               status:status.SUCCESS,
               result:{
-                events: [ eventsUnder, eventsPreg, eventsNew ],
+                events,
                 ultimo_evento,
                 eventsUnder,
                 eventsPreg,
