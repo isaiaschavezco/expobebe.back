@@ -22,6 +22,11 @@ const EventNewlyBornSchema = new Schema({
     required: [true, 'La url del thumbnail es requerida.']
   },
 
+//Esta ruta es para identificar si es de recien nacido o de las otras
+  route: {
+    type: String,
+    required: [true, 'La ruta del evento es requerida.']
+  },
   description: {
     type: String,
     required: [true, 'La descripción es requerida.']
@@ -77,9 +82,15 @@ const EventPregnantSchema = new Schema({
     // required:[true, 'La fecha y hora del evento son requeridas.']
   },
 
+
   urlThumbnail: {
     type: String,
     required: [true, 'La url del thumbnail es requerida.']
+  },
+  //Esta ruta es para identificar si es de recien nacido o de las otras
+  route: {
+    type: String,
+    required: [true, 'La ruta del evento es requerida.']
   },
 
   description: {
@@ -139,6 +150,11 @@ const EventUnderThreeYearsSchema = new Schema({
   urlThumbnail: {
     type: String,
     required: [true, 'La url del thumbnail es requerida.']
+  },
+  //Esta ruta es para identificar si es de recien nacido o de las otras
+  route: {
+    type: String,
+    required: [true, 'La ruta del evento es requerida.']
   },
 
   description: {

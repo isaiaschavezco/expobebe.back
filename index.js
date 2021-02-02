@@ -64,21 +64,21 @@ const cors = require('cors')
  app.use(morgan('tiny'));
  app.use(cors())
 
-const whitelist = [ 'http://localhost:3000','http://localhost:3001','https://expobebe.netlify.app','https://cms-expobebe.netlify.app' ]
+// const whitelist = [ 'http://localhost:3000','http://localhost:3001','https://expobebe.netlify.app','https://cms-expobebe.netlify.app' ]
  
-const corsOptions = {
-  origin: function( origin, callback ) {
-    console.log("origin: ",origin);
-    if( whitelist.indexOf( origin ) !== -1 )
-    {
-      callback(null,true)
-    } else
-    {
-      callback(new Error('Not allowed by CORS'))
-    }
+// const corsOptions = {
+//   origin: function( origin, callback ) {
+//     console.log("origin: ",origin);
+//     if( whitelist.indexOf( origin ) !== -1 )
+//     {
+//       callback(null,true)
+//     } else
+//     {
+//       callback(new Error('Not allowed by CORS'))
+//     }
     
-  }
-}
+//   }
+// }
 
 
  //general endpoints
@@ -86,34 +86,34 @@ app.use( "/api/users", user_ep );
  
 
 //Newlyborn endpoints
- app.use("/api/newlyborn/products",cors(corsOptions), product_newlyBorn);
- app.use("/api/newlyborn/trademarks",cors(corsOptions), trademarks_newlyBorn);
- app.use("/api/newlyborn/cards",cors(corsOptions), cards_newlyBorn);
- app.use("/api/newlyborn/books",cors(corsOptions), books_newlyBorn);
- app.use("/api/newlyborn/events",cors(corsOptions), events_newlyBorn);
- app.use("/api/newlyborn/chats",cors(corsOptions), chats_newlyBorn)
+ app.use("/api/newlyborn/products", product_newlyBorn);
+ app.use("/api/newlyborn/trademarks", trademarks_newlyBorn);
+ app.use("/api/newlyborn/cards", cards_newlyBorn);
+ app.use("/api/newlyborn/books", books_newlyBorn);
+ app.use("/api/newlyborn/events", events_newlyBorn);
+ app.use("/api/newlyborn/chats", chats_newlyBorn)
  //pregnant endpoints
- app.use("/api/pregnant/products",cors(corsOptions), product_pregnant);
- app.use("/api/pregnant/trademarks",cors(corsOptions), trademarks_pregnant);
- app.use("/api/pregnant/cards",cors(corsOptions), cards_pregnant);
- app.use("/api/pregnant/books",cors(corsOptions), books_pregnant);
- app.use("/api/pregnant/events",cors(corsOptions), events_pregnant);
- app.use("/api/pregnant/chats",cors(corsOptions), chats_pregnant)
+ app.use("/api/pregnant/products", product_pregnant);
+ app.use("/api/pregnant/trademarks", trademarks_pregnant);
+ app.use("/api/pregnant/cards", cards_pregnant);
+ app.use("/api/pregnant/books", books_pregnant);
+ app.use("/api/pregnant/events", events_pregnant);
+ app.use("/api/pregnant/chats", chats_pregnant)
  //pregnant underThreeyears
- app.use("/api/under/products",cors(corsOptions), product_under);
- app.use("/api/under/trademarks",cors(corsOptions), trademarks_under);
- app.use("/api/under/cards",cors(corsOptions), cards_under);
- app.use("/api/under/books",cors(corsOptions), books_under);
- app.use("/api/under/events",cors(corsOptions), events_under);
- app.use("/api/under/chats",cors(corsOptions), chats_under)
+ app.use("/api/under/products", product_under);
+ app.use("/api/under/trademarks", trademarks_under);
+ app.use("/api/under/cards", cards_under);
+ app.use("/api/under/books", books_under);
+ app.use("/api/under/events", events_under);
+ app.use("/api/under/chats", chats_under)
  
  
  //General enpoints
- app.use( "/api/error",cors(corsOptions), error_newlyBorn );
- app.use("/api/videos",cors(corsOptions), videos_ep);
-app.use( "/api/utilities",cors(corsOptions), utilities_ep );
+ app.use( "/api/error", error_newlyBorn );
+ app.use("/api/videos", videos_ep);
+app.use( "/api/utilities", utilities_ep );
  
-app.get( "/",cors(corsOptions), (req,res) => {
+app.get( "/", (req,res) => {
    res.send("Genial!")
  })
 

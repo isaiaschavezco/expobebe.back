@@ -86,6 +86,9 @@ eventCtrl.updateEvent= async (req, res)=>{
           if(req.body.status){
             attributes.status = req.body.status
           }
+          if(req.body.route){
+            attributes.route = req.body.route
+          }
           console.log("PATCH->attributes:", attributes)
           const event = await serviceGenerics.patch(EventUnderThreeYears,
             attributes,

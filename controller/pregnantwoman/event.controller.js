@@ -5,7 +5,7 @@ const eventCtrl = {}
   const serviceEvents = require("../../services/Events")
   const serviceGenerics = require("../../services/Generic")
   const serviceUtilities = require("../../services/Utilities")
- const {EventPregnant} = require("../../models/Events")
+ const {EventPregnant } = require("../../models/Events")
 
   var moment = require('moment');
 
@@ -86,6 +86,9 @@ eventCtrl.updateEvent= async (req, res)=>{
           if(req.body.status){
             attributes.status = req.body.status
           }
+          if(req.body.route){
+            attributes.route = req.body.route
+          }
           console.log("PATCH->attributes:", attributes)
           const event = await serviceGenerics.patch(EventPregnant,
             attributes,
@@ -146,6 +149,7 @@ eventCtrl.updateEvent= async (req, res)=>{
       eventCtrl.getEventWithPagination= async (req, res)=>{
         console.log("/pagination")
         console.log("req.query:", req.query)
+
         if(    req.query.date != null
             && req.query.greaterDate != null
             && req.query.lowerDate != null
